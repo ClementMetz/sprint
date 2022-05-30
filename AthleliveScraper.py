@@ -126,7 +126,7 @@ def scrap_event(n,status,day,nb_days,projection=False):
                     nbpoints = driver.find_element(By.XPATH,pointsxpath).text
                     
                     try:
-                        stand_event = standardize_event(event,gender)
+                        stand_event,_ = standardize_event(event,gender)
                         computed_points = regressor.reg(stand_event,perf)
                         if computed_points!=int(nbpoints):
                             print("Computed points do not match with website : " + "computed points = "+str(computed_points)+
