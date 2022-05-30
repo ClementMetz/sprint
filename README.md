@@ -38,6 +38,8 @@ Le but de l'algorithme est de trouver la meilleure répartition possible en pren
 
 ## Exactitude de la solution
 
-La méthode utilisée pour résoudre ce problème d'optimisation en nombres entiers est de le relaxer en un problème d'optimisation linéaire pouvant être résolu par la méthode des points intérieurs (variante du célèbre algorithme du simplexe). Expérimentalement, il semble que le résultat de l'optimisation relaxée soit toujours la solution du problème en nombres entiers (les variables convergent toujours vers 0 ou 1, la solution optimale du problème relaxé est une solution du problème en nombres entiers, et c'en est donc la solution optimale). Aucune garantie théorique n'est connue. Toute preuve mathématique de ce fait serait donc la bienvenue.
+La méthode utilisée pour traiter ce problème d'optimisation en nombres entiers est de le relaxer en un problème d'optimisation linéaire. Il est ensuite résolu par la méthode des points intérieurs (variante du célèbre algorithme du simplexe). Expérimentalement, il semble que le résultat de l'optimisation relaxée soit toujours la solution du problème en nombres entiers (les variables convergent toujours vers 0 ou 1, la solution optimale du problème relaxé est donc une solution du problème en nombres entiers, et c'en est par conséquent la solution optimale). La garantie théorique de ce fait n'est pas connue. Toute preuve mathématique serait donc la bienvenue.
 
 ## Génération automatique du tableau des performances
+
+Sprint offre la possibilité de générer automatiquement les tableaux de performances PerfW et PerfM
