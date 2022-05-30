@@ -19,4 +19,6 @@ En cours de développement :
 
 ## Utilisation
 
-Aller
+Ouvrir ISPTableur_run.xlrd.
+
+![Image](/resources/perfs.png)
