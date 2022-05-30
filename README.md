@@ -51,3 +51,9 @@ Une fois cette tâche effectuée, on peut exécuter AthleteScraper.py. On obtien
 Les performances indiquées correspondent aux derniers season best connu de chaque athlète dans chaque discipline.
 
 ## Suivi des compétitions et export CSV
+
+Sprint permet enfin un outil d'export CSV des résultats des compétitions sur https://athle.live/. La commande suivante produit l'export CSV et compte les points par équipe de la compétition en live située à l'adresse https://athle.live/challenge/yourcompetitionurl. Si la compétition a le statut "Résultats", on écrit simplement --competition_status=resultats.
+
+`python AthleliveScraper.py --competition_url=https://athle.live/challenge/yourcompetitionurl --competition_status=live`
+
+On peut ensuite ouvrir le fichier competition.csv. On sélectionne la 1ère colonne du fichier, puis Données -> Convertir, et on sélectionne le séparateur |.
