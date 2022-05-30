@@ -49,7 +49,7 @@ Sprint offre la possibilité de générer automatiquement les tableaux de perfor
 
 Une fois cette tâche effectuée, on peut exécuter `python AthleteScraper.py`. On obtient un fichier last_sbs.txt que l'on peut importer dans Excel en utilisant l'onglet Données -> Données externes -> Fichier texte de la barre d'outils. Le séparateur utilisé est le symbole |. Il suffit de copier les parties correspondantes du tableau obtenu dans les onglets PerfM et PerfW.
 
-Les performances indiquées correspondent aux derniers season best connu de chaque athlète dans chaque discipline.
+Les performances indiquées correspondent aux derniers season best connus de chaque athlète dans chaque discipline.
 
 ## Suivi des compétitions et export CSV
 
