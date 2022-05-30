@@ -42,4 +42,12 @@ La méthode utilisée pour traiter ce problème d'optimisation en nombres entier
 
 ## Génération automatique du tableau des performances
 
-Sprint offre la possibilité de générer automatiquement les tableaux de performances PerfW et PerfM
+Sprint offre la possibilité de générer automatiquement les tableaux de performances PerfW et PerfM. Pour cela, on va dans l'onglet AthleteScraper de ISPTableur_run.xlsm. On remplit les noms, prénoms et sexes des athlètes. On remplit de préférence les numéros de licences, de sorte à éviter les problèmes d'homonymie. Il est préférable de commencer par les athlètes d'un même sexe, puis ceux de l'autre, afin de simplifier l'import des données.
+
+![Image](/resources/scraper.png)
+
+Une fois cette tâche effectuée, on peut exécuter AthleteScraper.py. On obtient un fichier last_sbs.txt que l'on peut importer dans Excel en utilisant l'onglet Données -> Données externes -> Fichier texte de la barre d'outils. Le séparateur utilisé est le symbole |. Il suffit de copier les parties correspondantes du tableau obtenu dans les onglets PerfM et PerfW.
+
+Les performances indiquées correspondent aux derniers season best connu de chaque athlète dans chaque discipline.
+
+## Suivi des compétitions et export CSV
