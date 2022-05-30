@@ -19,6 +19,14 @@ En cours de développement :
 
 ## Utilisation
 
-Ouvrir ISPTableur_run.xlrd.
+Ouvrir ISPTableur_run.xlsm.
 
 ![Image](/resources/perfs.png)
+
+On entre dans PerfM (pour les hommes) et PerfW (pour les femmes) toutes les performances connues des athlètes du club dans toutes les épreuves des interclubs. Les bonnes pratiques sont résumées dans l'onglet Bonnes Pratiques. Il est fortement conseillé de le lire.
+
+![Image](/resources/schedule.png)
+
+On entre dans ConflictsHelperM (pour les hommes) et ConflictsHelperW (pour les femmes) les horaires de début d'échauffement et de fin de repos pour chacune des épreuves.
+
+On exécute ensuite ISPSolver.py. Le résultat est contenu dans le fichier Excel ISPSolution.xlsx
