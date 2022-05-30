@@ -15,6 +15,7 @@ En cours de développement :
 * selenium
 * xlrd
 * xlsxwriter
+* numpy
 * scipy.optimize
 
 ## Utilisation
@@ -29,7 +30,7 @@ On entre dans PerfM (pour les hommes) et PerfW (pour les femmes) toutes les perf
 
 On entre dans ConflictsHelperM (pour les hommes) et ConflictsHelperW (pour les femmes) les horaires de début d'échauffement et de fin de repos pour chacune des épreuves.
 
-On exécute ensuite ISPSolver.py. Le résultat est contenu dans le fichier Excel ISPSolution.xlsx.
+On exécute ensuite `python ISPSolver.py`. Le résultat est contenu dans le fichier Excel ISPSolution.xlsx.
 
 ![Image](/resources/result.png)
 
@@ -46,7 +47,7 @@ Sprint offre la possibilité de générer automatiquement les tableaux de perfor
 
 ![Image](/resources/scraper.png)
 
-Une fois cette tâche effectuée, on peut exécuter AthleteScraper.py. On obtient un fichier last_sbs.txt que l'on peut importer dans Excel en utilisant l'onglet Données -> Données externes -> Fichier texte de la barre d'outils. Le séparateur utilisé est le symbole |. Il suffit de copier les parties correspondantes du tableau obtenu dans les onglets PerfM et PerfW.
+Une fois cette tâche effectuée, on peut exécuter `python AthleteScraper.py`. On obtient un fichier last_sbs.txt que l'on peut importer dans Excel en utilisant l'onglet Données -> Données externes -> Fichier texte de la barre d'outils. Le séparateur utilisé est le symbole |. Il suffit de copier les parties correspondantes du tableau obtenu dans les onglets PerfM et PerfW.
 
 Les performances indiquées correspondent aux derniers season best connu de chaque athlète dans chaque discipline.
 
