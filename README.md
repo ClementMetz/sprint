@@ -29,4 +29,8 @@ On entre dans PerfM (pour les hommes) et PerfW (pour les femmes) toutes les perf
 
 On entre dans ConflictsHelperM (pour les hommes) et ConflictsHelperW (pour les femmes) les horaires de début d'échauffement et de fin de repos pour chacune des épreuves.
 
-On exécute ensuite ISPSolver.py. Le résultat est contenu dans le fichier Excel ISPSolution.xlsx
+On exécute ensuite ISPSolver.py. Le résultat est contenu dans le fichier Excel ISPSolution.xlsx.
+
+![Image](/resources/result.png)
+
+En haut de AffectationM et AffectationW, on a le tableau des athlètes participants à chaque épreuve. A droite, pour chaque athlète, les épreuves auxquelles il/elle participe. On a également les tables hongroises des performances entrées à disposition dans HungarianTableM et W.
