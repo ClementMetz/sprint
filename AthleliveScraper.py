@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 import argparse
 from auxiliary import athle_regressor,standardize_event
 
-"""
+""" #Exemple
 competition_url = 'https://athle.live/challenge/6286492bfcef3bf59ac57943'
 competition_status = 'live' #'live' ou 'resultats'
 ping = 1.5
@@ -158,17 +158,12 @@ def scrap_event(n,status,day,nb_days,projection=False):
 
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-
 driver.get(competition_url)
-
 accept_cookies = driver.find_element(By.XPATH,"/html/body/div/div[3]/div/div/div[3]/button") 
-
 accept_cookies.send_keys(Keys.ENTER)#accept cookies
 time.sleep(ping)
-
 competition_base = []
 clubpoints = dict()
-
 day=1
 i=1
 count_event=1
@@ -189,13 +184,15 @@ while day<=nb_days:
         i=1
 
 #print(competition_base) #club, name, gender, event, category, points
-print(clubpoints)
+#print(clubpoints)
 
-def condition(x):
+def condition(x): #example condition
     return(x['club']=='fc laon' and x['gender']=='M')
 
 #print(list(x for x in competition_base if (condition(x))))
 #{'club':clubname,'gender':gender,'name':athletename,'event':event,'cat':category,'perf':perf,'nbpoints':nbpoints}
+
+#CSV export
 import csv
 
 with open('competition.csv', 'w') as csvfile:
@@ -204,11 +201,6 @@ with open('competition.csv', 'w') as csvfile:
     for x in competition_base:
         row = [x['club'],x['name'],x['gender'],x['event'],x['cat'],x['perf'],x['nbpoints']]
         filewriter.writerow(row)
-    
-
-
-
-
 
 driver.close()
 
