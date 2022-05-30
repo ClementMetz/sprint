@@ -8,6 +8,7 @@ Sprint est un projet de gestion numérique à destination des clubs d'athlétism
 
 En cours de développement :
 
+* Outil de visualisation graphique de l'évolution d'un athlète.
 * Outil d'estimation du potentiel des jeunes athlètes.
 
 ## Modules python à installer
