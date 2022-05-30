@@ -33,4 +33,11 @@ On exécute ensuite ISPSolver.py. Le résultat est contenu dans le fichier Excel
 
 ![Image](/resources/result.png)
 
-En haut de AffectationM et AffectationW, on a le tableau des athlètes participants à chaque épreuve. A droite, pour chaque athlète, les épreuves auxquelles il/elle participe. On a également les tables hongroises des performances entrées à disposition dans HungarianTableM et W.
+En haut de AffectationM et AffectationW, on a le tableau des athlètes participants à chaque épreuve. A droite, pour chaque athlète, les épreuves auxquelles il/elle participe. Le total de points est indiqué en haut à gauche. On a également les tables hongroises des performances entrées à disposition dans HungarianTableM et W.
+Le but de l'algorithme est de trouver la meilleure répartition possible en prenant en compte les contraintes des interclubs (2 athlètes maximum par épreuve, 2 épreuves maximum par athlète, une course maximum par athlète, et pas de conflit horaire entre épreuves). 
+
+## Exactitude de la solution
+
+La méthode utilisée pour résoudre ce problème d'optimisation en nombres entiers est de le relaxer en un problème d'optimisation linéaire pouvant être résolu par la méthode des points intérieurs (variante du célèbre algorithme du simplexe). Expérimentalement, il semble que le résultat de l'optimisation relaxée soit toujours la solution du problème en nombres entiers (les variables convergent toujours vers 0 ou 1, la solution optimale du problème relaxé est une solution du problème en nombres entiers, et c'en est donc la solution optimale). Aucune garantie théorique n'est connue. Toute preuve mathématique de ce fait serait donc la bienvenue.
+
+## Génération automatique du tableau des performances
