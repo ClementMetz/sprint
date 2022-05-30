@@ -1,4 +1,4 @@
-## Sprint
+# Sprint
 
 Sprint est un projet de gestion numérique à destination des clubs d'athlétisme français. Ses fonctionnalités sont les suivantes :
 
@@ -10,7 +10,7 @@ En cours de développement :
 
 * Outil d'estimation du potentiel des jeunes athlètes.
 
-# Modules python à installer
+## Modules python à installer
 
 * selenium
 * xlrd
