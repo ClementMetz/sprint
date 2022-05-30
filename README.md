@@ -16,3 +16,7 @@ En cours de développement :
 * xlrd
 * xlsxwriter
 * scipy.optimize
+
+## Utilisation
+
+Aller
