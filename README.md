@@ -57,3 +57,5 @@ Sprint permet enfin un outil d'export CSV des résultats des compétitions sur h
 `python AthleliveScraper.py --competition_url=https://athle.live/challenge/yourcompetitionurl --competition_status=live`
 
 On peut ensuite ouvrir le fichier competition.csv. On sélectionne la 1ère colonne du fichier, puis Données -> Convertir, et on sélectionne le séparateur |.
+
+![Image](/resources/csvexport.png)
