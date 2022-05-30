@@ -24,7 +24,7 @@ Ouvrir ISPTableur_run.xlsm.
 
 ![Image](/resources/perfs.png)
 
-On entre dans PerfM (pour les hommes) et PerfW (pour les femmes) toutes les performances connues des athlètes du club dans toutes les épreuves des interclubs. Les bonnes pratiques sont résumées dans l'onglet Bonnes Pratiques. Il est fortement conseillé de le lire.
+On entre dans PerfM (pour les hommes) et PerfW (pour les femmes) toutes les performances connues des athlètes du club dans toutes les épreuves des interclubs. Les bonnes pratiques sont résumées dans l'onglet Bonnes Pratiques. Il est fortement conseillé de les lire.
 
 ![Image](/resources/schedule.png)
 
