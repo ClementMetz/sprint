@@ -14,6 +14,7 @@ En cours de développement :
 ## Modules python à installer
 
 * selenium
+* bs4 (BeautifulSoup)
 * xlrd
 * xlsxwriter
 * numpy
