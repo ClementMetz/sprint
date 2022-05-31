@@ -66,7 +66,7 @@ On peut ensuite ouvrir le fichier competition.csv. On sélectionne la 1ère colo
 
 On peut obtenir les nuages de points et courbes de performances d'un athlète pour les épreuves prises en charge avec la commande suivante :
 
-`python DrawAthleteInfo.py --name=name --firstname=firstname --gender=M`
+`python DrawAthleteInfo.py --name=name --firstname=firstname --gender=`
 
 Les graphiques sont alors contenus dans le dossier Figures/name.
 
