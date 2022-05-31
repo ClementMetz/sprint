@@ -16,7 +16,8 @@ ping = 1.5
 nb_days=2
 """
 
-parser = argparse.ArgumentParser(description='Scrap athle.live')
+
+parser = argparse.ArgumentParser(description='Scrap athle.live for competition info')
 parser.add_argument('--competition_url', metavar='url', type=str,
                     help='Url of the competition')
 parser.add_argument('--competition_status', metavar='status', type=str, default='resultats', choices=['live','resultats']
