@@ -69,13 +69,12 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
                 #print(event)
                 event,hidden_event = standardize_event(event,gender)
                 entry.append([event,hidden_event])
-                #print(event,hidden_event)
                 
                 perfxpath = tablexpath+'/tr['+str(i)+']/td[11]'
                 perf = driver.find_element(By.XPATH,perfxpath).text
                 #print(perf)
                 perf = clean_up_perf(perf,event)
-                #print(perf)
+
                 entry.append(perf)
                 
                 pointsxpath = tablexpath+'/tr['+str(i)+']/td[13]'
@@ -90,9 +89,8 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
                 entry.append(date)
                 
                 try: #compute points
-                    #print(event,hidden_event,perf)
                     entry[3] = regressor.reg(hidden_event,perf)
-                    #print('cc')
+                
                 except: #event unknown by regressor
                     pass
                 
@@ -120,15 +118,8 @@ def date_to_float(date):
 def draw_graphics_from_athlete_data(data,opt):
     data_by_event = {}
     for entry in data:
-        #entry[2] = clean_up_perf(entry[2],entry[1][1])
-       
-        #if 'tria' in entry[1][0] or 'penta' in entry[1][0] or 'hepta' in entry[1][0] or 'deca' in entry[1][0]: #handle combine events
-            #entry[3] = entry[2]
         
-        #Get rid of unknown and poorly scored events, take care of triathlon for kids
-        cond = (entry[3]!=' ' and ((int(entry[3])>50 and 'tria' not in entry[1]) or
-                    ('tria' in entry[1] and not ("CA" in entry[4] or "JU" in entry[4] or "ES" in entry[4] or "SE" in entry[4] or "VE" in entry[4]))))
-        if cond : 
+        if type(entry[3])==int: 
             #print(entry)
             if entry[1][0] not in data_by_event.keys():
                 data_by_event[entry[1][0]] = [[entry[2],int(entry[3]),int(entry[5])+date_to_float(entry[6])]]
