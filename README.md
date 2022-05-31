@@ -70,4 +70,4 @@ On peut obtenir les nuages de points et courbes de performances d'un athlète po
 
 Les graphiques sont alors contenus dans le dossier Figures/name.
 
-![Image](/resources/ndama.png)
+![Image](/resources/60mHWi.png)
