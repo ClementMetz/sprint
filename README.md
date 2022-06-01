@@ -5,15 +5,16 @@ Sprint est un projet de gestion numérique à destination des clubs d'athlétism
 * Collecte sur https://bases.athle.fr/index.aspx et export des données des athlètes du club (AthleteScraper.py).
 * Planification des interclubs et répartition optimisée des athlètes dans les différentes épreuves de la compétition (ISPSolver.py).
 * Collecte et export csv des données des compétitions à partir du site https://athle.live/ (AthleliveScraper.py).
+* Outil de visualisation graphique de l'évolution d'un athlète (DrawAthleteInfo.py).
 
 En cours de développement :
 
-* Outil de visualisation graphique de l'évolution d'un athlète.
 * Outil d'estimation du potentiel des jeunes athlètes.
 
 ## Modules python à installer
 
 * selenium
+* bs4 (BeautifulSoup)
 * xlrd
 * xlsxwriter
 * numpy
@@ -54,10 +55,20 @@ Les performances indiquées correspondent aux derniers season best connus de cha
 
 ## Suivi des compétitions et export CSV
 
-Sprint permet enfin un outil d'export CSV des résultats des compétitions sur https://athle.live/. La commande suivante produit l'export CSV et compte les points par équipe de la compétition en live située à l'adresse https://athle.live/challenge/yourcompetitionurl. Si la compétition a le statut "Résultats", on écrit simplement --competition_status=resultats.
+Sprint donne accès à un outil d'export CSV des résultats des compétitions sur https://athle.live/. La commande suivante produit l'export CSV et compte les points par équipe de la compétition en live située à l'adresse https://athle.live/challenge/yourcompetitionurl. Si la compétition a le statut "Résultats", on écrit simplement --competition_status=resultats.
 
 `python AthleliveScraper.py --competition_url=https://athle.live/challenge/yourcompetitionurl --competition_status=live`
 
 On peut ensuite ouvrir le fichier competition.csv. On sélectionne la 1ère colonne du fichier, puis Données -> Convertir, et on sélectionne le séparateur |.
 
 ![Image](/resources/csvexport.png)
+
+## Analyse de performances
+
+On peut obtenir les nuages de points et courbes de performances d'un athlète pour les épreuves prises en charge avec la commande suivante (exemple de Solène Ndama) :
+
+`python DrawAthleteInfo.py --name=Ndama --firstname=Solene --gender=W`
+
+Les graphiques sont alors contenus dans le dossier Figures/name.
+
+![Image](/resources/60mHWi.png)
