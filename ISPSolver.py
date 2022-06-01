@@ -8,12 +8,15 @@ import xlsxwriter
 import warnings
 import os
 import random
+import argparse
 
-table = xlrd.open_workbook('ISPTableur_run.xlsm')
-perfM = table.sheet_by_name("PerfM")
-perfW = table.sheet_by_name("PerfW")
-conflictsM = table.sheet_by_name("EventConflictsM")
-conflictsW = table.sheet_by_name("EventConflictsW")
+def parse_option():
+    parser = argparse.ArgumentParser(description='Optimize interclubs placement')
+    parser.add_argument('--workdir', type=str,default='ISPTableur_run.xlsm',help='Workbook directory')
+    args = parser.parse_args()
+    return(args)
+
+
 
 def initialize(perf,conflicts): #problem initialization
     athletes = perf.col(0)[1:]
@@ -206,7 +209,7 @@ def output(ev,ath,workbook,sheetname,k,n,sol,hung,solution_feasible): #output ma
     
     
 
-def main(perf,conflicts,ev,ath,k,n,nb_confs,hungarian_perfos,conftable):
+def optim(perf,conflicts,ev,ath,k,n,nb_confs,hungarian_perfos,conftable):
 
     
     #Affectation computation
@@ -263,25 +266,28 @@ def main(perf,conflicts,ev,ath,k,n,nb_confs,hungarian_perfos,conftable):
     return(sol,solution_feasible)
     
 
-print("----------Men's problem initialization-------------")
-ev,ath,k,n,nb_confs,hung,conf = initialize(perfM,conflictsM)
 
-print("----------Men's problem resolution-------------")
+def main():
+    opt = parse_option()
+    table = xlrd.open_workbook(opt.workdir)
+    perfM = table.sheet_by_name("PerfM")
+    perfW = table.sheet_by_name("PerfW")
+    conflictsM = table.sheet_by_name("EventConflictsM")
+    conflictsW = table.sheet_by_name("EventConflictsW")
+    print("----------Men's problem initialization-------------")
+    ev,ath,k,n,nb_confs,hung,conf = initialize(perfM,conflictsM)
+    print("----------Men's problem resolution-------------")
+    sol,solution_feasible = optim(perfM,conflictsM,ev,ath,k,n,nb_confs,hung,conf)
+    print("----------Men's solution found-------------")
+    workbook = xlsxwriter.Workbook('ISPSolution.xlsx')
+    output(ev,ath,workbook,"M",k,n,sol,hung,solution_feasible)
+    print("----------Women's problem initialization-------------")
+    ev,ath,k,n,nb_confs,hung,conf = initialize(perfW,conflictsW)
+    print("----------Women's problem resolution-------------")
+    sol,solution_feasible = optim(perfW,conflictsW,ev,ath,k,n,nb_confs,hung,conf)
+    print("----------Women's solution found-------------")
+    output(ev,ath,workbook,"W",k,n,sol,hung,solution_feasible)
+    workbook.close()
 
-sol,solution_feasible = main(perfM,conflictsM,ev,ath,k,n,nb_confs,hung,conf)
-
-print("----------Men's solution found-------------")
-workbook = xlsxwriter.Workbook('ISPSolution.xlsx')
-output(ev,ath,workbook,"M",k,n,sol,hung,solution_feasible)
-
-print("----------Women's problem initialization-------------")
-ev,ath,k,n,nb_confs,hung,conf = initialize(perfW,conflictsW)
-
-print("----------Women's problem resolution-------------")
-sol,solution_feasible = main(perfW,conflictsW,ev,ath,k,n,nb_confs,hung,conf)
-
-print("----------Women's solution found-------------")
-
-output(ev,ath,workbook,"W",k,n,sol,hung,solution_feasible)
-
-workbook.close()
+if __name__ == '__main__':
+    main()
