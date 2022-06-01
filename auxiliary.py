@@ -133,6 +133,12 @@ def standardize_event(event,gender): #Second version
                 event,hidden_event = "1mile"+gender+'i',"1mile"+gender+'i'
             elif event[:6]=="3 000m":
                 event,hidden_event = "3000m"+gender+'i',"3000m"+gender+'i'
+            else: #unknown distance
+                l = (event.split('/')[0]).split(' ')
+                s = ''
+                for i in range(len(l)):
+                    s+=l[i]
+                event,hidden_event=s,s
         elif "longueur" in event:
             event,hidden_event = "long"+gender+'i',"long"+gender+'i'
         elif "hauteur" in event:
@@ -297,6 +303,12 @@ def standardize_event(event,gender): #Second version
                 event,hidden_event = "5000m"+gender,"5000m"+gender
             elif event=="10 000m":
                 event,hidden_event = "10000m"+gender,"10000m"+gender
+            else: #unknown distance
+                l = (event.split('/')[0]).split(' ')
+                s = ''
+                for i in range(len(l)):
+                    s+=l[i]
+                event,hidden_event=s,s
         elif identifiers["marche"]:
             if "3 000m" in event:
                 event,hidden_event="3000walk"+gender,"3000walk"+gender
@@ -575,13 +587,24 @@ def clean_up_perf(perf,event):
     #print(perf)
 
     #Handle combined events and spaces
-    if event in ["pentaWi","heptaWi","heptaW","decaM","triaW","triaM","triaWi","triaMi"]:
+    if event in ["pentaWi","heptaWi","heptaW","pentaW","pentaM","pentaMi","decaM","heptaM","heptaMi","triaW","triaM","triaWi","triaMi"]:
         s = perf.split(' ')
-        if len(s)>1:
-            if s[1]=="pts":
+        if len(s)==2: #121 pts -> 121
+            if s[1]=="pts": 
                 perf = s[0]
-            else:
+            else: #7 000 -> 7000
+                perf = s[0]+s[1]
+        elif len(s)==3:
+            if s[1]=="pts": #121 pts blabla -> 121
+                perf = s[0]
+            elif s[2] == "pts": #7 000 pts -> 7000
+                perf = s[0]+s[1]
+            else: #7 000 blabla -> 7000
                 perf = s[0]+s[1]
     else:
-        perf = perf.split(' ')[0]
+        perf = perf.split(' ')[0] #8m95 blabla (+1.7) -> 8m95
+
     return(perf)
+
+
+#test
