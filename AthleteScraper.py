@@ -10,9 +10,15 @@ from auxiliary import athle_regressor,clean_up_perf,standardize_event
 import numpy as np
 import xlrd
 import xlsxwriter
+import argparse
 
-table = xlrd.open_workbook('ISPTableur_run.xlsm')
-athletes2scrape = table.sheet_by_name("AthleteScraper")
+
+def parse_option():
+    parser = argparse.ArgumentParser(description='Optimize interclubs placement')
+    parser.add_argument('--workdir', type=str,default='ISPTableur_run.xlsm',help='Workbook directory')
+    args = parser.parse_args()
+    return(args)
+
 
 def initialize(athletes_table):
     print(athletes_table)
@@ -125,22 +131,28 @@ def make_csv(dico,gender,file):
 
 
 
-ath_table = initialize(athletes2scrape)
-time.sleep(0.1)
+def main():
+    opt = parse_option()
+    table = xlrd.open_workbook(opt.workdir)
+    athletes2scrape = table.sheet_by_name("AthleteScraper")
+    ath_table = initialize(athletes2scrape)
+    time.sleep(0.1)
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-url = "https://bases.athle.fr/asp.net/accueil.aspx?frmbase=resultats"
-driver.get(url)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    url = "https://bases.athle.fr/asp.net/accueil.aspx?frmbase=resultats"
+    driver.get(url)
 
-f = open('last_sbs.txt','w')
-for ath in ath_table:
-    last_SBs = request(driver,ath['name'],ath['firstname'],ath['gender'],True,ath['licence'],'')
-    print(ath['firstname'],ath['name'])
-    print(last_SBs)
-    make_csv(last_SBs,ath['gender'],f)
-f.close()
+    f = open('last_sbs.txt','w')
+    for ath in ath_table:
+        last_SBs = request(driver,ath['name'],ath['firstname'],ath['gender'],True,ath['licence'],'')
+        print(ath['firstname'],ath['name'])
+        print(last_SBs)
+        make_csv(last_SBs,ath['gender'],f)
+    f.close()
 
 
+if __name__ == '__main__':
+    main()
 
 
 
