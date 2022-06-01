@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -66,8 +67,43 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
         element.click()
         #time.sleep(0.5)
         tablexpath = '/html/body/div/div[2]/table[2]/tbody'
-        i=3
 
+        try:
+            table = driver.find_element(By.XPATH,tablexpath)
+            soup = BeautifulSoup(table.get_attribute('innerHTML'), 'html.parser')
+            t = soup.get_text(separator='|||').split('\n')
+            for i in range (2,len(t)):
+                l = t[i].split('|||')
+                print(l)
+                date = l[1]
+                event = l[3]
+                event,hidden_event = standardize_event(event,gender)
+                lh = len(hidden_event)
+                if event[lh-1] == 'i': #indoor events are outdoor events
+                    event = event[:lh-1]
+                perf = l[6]
+                perf = clean_up_perf(perf,event)
+
+                if event in ['100mM','200mM','400mM','800mM','1500mM','3000mM','3000scM','110mHM','400mHM','5000walkM','longM','highM','tripleM','poleM',
+                'shotM','javM','hammerM','discM','100mW','200mW','400mW','800mW','1500mW','3000mW','100mHW','400mHW','3000walkW','longW','highW','tripleW','poleW','shotW','javW','hammerW','discW']:
+                    new = regressor.reg(hidden_event,perf)
+                    if new>0 and (event not in current_SBs.keys() or new > regressor.reg(hidden_event,current_SBs[event])):
+                        current_SBs[event] = perf
+                
+
+        except:
+            pass
+
+        for key in current_SBs.keys():
+            #print(key)
+            last_SBs[key] = current_SBs[key]
+        
+        driver.back()
+
+    return(last_SBs)
+
+"""   
+        i=3
         while True: #/html/body/div/div[2]/table[2]/tbody/tr[3]/td[5]
             try:
                 datexpath = tablexpath+'/tr['+str(i)+']/td[1]'
@@ -94,8 +130,6 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
                     if new>0 and (event not in current_SBs.keys() or new > regressor.reg(hidden_event,current_SBs[event])):
                         current_SBs[event] = perf
 
-
-
                 i+=1
     
             except:
@@ -108,7 +142,7 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
         driver.back()
 
     return(last_SBs)
-
+"""
 
 def make_csv(dico,gender,file):
     

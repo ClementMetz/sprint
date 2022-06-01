@@ -69,6 +69,6 @@ On peut obtenir les nuages de points et courbes de performances d'un athlète po
 
 `python DrawAthleteInfo.py --name=Ndama --firstname=Solene --gender=W`
 
-Les graphiques sont alors contenus dans le dossier Figures/name.
+Les graphiques sont alors contenus dans le dossier Figures/name. On peut également indiquer le numéro de licence via l'option --licence_nb afin d'éviter les problèmes d'homonymie.
 
 ![Image](/resources/60mHWi.png)
