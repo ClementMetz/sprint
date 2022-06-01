@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -52,6 +53,50 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
         element.click()
 
         tablexpath = '/html/body/div/div[2]/table[2]/tbody'
+
+        try:
+            table = driver.find_element(By.XPATH,tablexpath)
+            soup = BeautifulSoup(table.get_attribute('innerHTML'), 'html.parser')
+            t = soup.get_text(separator='|||').split('\n')
+            #print(t)
+            for i in range (2,len(t)):
+                l = t[i].split('|||')
+                date = l[1]
+                event = l[3]
+                event,hidden_event = standardize_event(event,gender)
+                perf = l[6]
+                perf = clean_up_perf(perf,event)
+                if len(l)==12: #no wind
+                    points = l[7]
+                    category = l[8]
+                elif len(l)==13: #wind
+                    points = l[8]
+                    category = l[9]
+                else:
+                    points = 0
+                    category = "unknown"
+
+                entry = [firstname+'_'+athletename,[event,hidden_event],perf,points,category,year,date]
+                
+                try: #compute points
+                    entry[3] = regressor.reg(hidden_event,perf)
+                except: #event unknown by regressor
+                    pass
+            
+                entries.append(entry)
+            entries.reverse()
+            print(entries)
+        except:
+            pass
+
+        data+=entries
+        driver.back()
+
+    print(str(len(data))+' entries found.')
+    return(data)
+
+
+"""
         i=3
 
         while True:
@@ -108,7 +153,7 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
 
     print(str(len(data))+' entries found.')
     return(data)
-
+"""
 
 def date_to_float(date):
     j,m = tuple(date.split('/'))
@@ -152,8 +197,7 @@ def parse_option():
     parser.add_argument('--firstname', type=str,help='Athlete firstname')
     parser.add_argument('--name',type=str,help='Athlete name')
     parser.add_argument('--gender',type=str,choices=['W','M'],help='Athlete gender')
-    parser.add_argument('--by_licence_nb',default=False,help='Search by licence nb')
-    parser.add_argument('--licence_nb',type=int,help='Athlete licence')
+    parser.add_argument('--licence_nb',type=int,default=0,help='Athlete licence')
 
     args = parser.parse_args()
     
@@ -169,7 +213,7 @@ def main():
     athletename = opt.name
     firstname = opt.firstname
     gender = opt.gender
-    by_licence_nb = opt.by_licence_nb
+    by_licence_nb = (opt.licence_nb!=0)
     licence_nb = opt.licence_nb
 
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))

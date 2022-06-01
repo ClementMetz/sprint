@@ -74,7 +74,7 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
             t = soup.get_text(separator='|||').split('\n')
             for i in range (2,len(t)):
                 l = t[i].split('|||')
-                print(l)
+                #print(l)
                 date = l[1]
                 event = l[3]
                 event,hidden_event = standardize_event(event,gender)
