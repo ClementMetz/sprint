@@ -11,16 +11,16 @@ En cours de développement :
 
 * Outil d'estimation du potentiel des jeunes athlètes.
 
-## Modules python à installer
+## A installer
 
-* selenium
-* webdriver_manager
-* bs4 (BeautifulSoup)
-* xlrd
-* xlsxwriter
-* openpyxl
-* numpy
-* scipy
+* python (https://www.python.org/)
+* selenium (cmd -> pip install selenium)
+* webdriver_manager (cmd -> pip install webdriver_manager)
+* bs4 (BeautifulSoup) (cmd -> pip install beautifulsoup4)
+* xlrd (cmd -> pip install xlrd)
+* xlsxwriter (cmd -> pip install xlsxwriter)
+* openpyxl (cmd -> pip install openpyxl)
+* numpy et scipy (cmd -> pip install scipy)
 
 ## Utilisation
 
