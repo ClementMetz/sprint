@@ -21,7 +21,7 @@ import os
 def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0,clubname=''):
     regressor = athle_regressor()
     now = datetime.now().year
-    time.sleep(0.2)
+    #time.sleep(0.2)
     element = driver.find_element(By.XPATH,'/html/body/div/div[2]/table/tbody/tr/td[4]')
     element.click()
     
@@ -31,7 +31,7 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
         entries = []
         year = str(y)
         
-        time.sleep(0.3)
+        #time.sleep(0.3)
         select = Select(driver.find_element(By.XPATH,'/html/body/div/div[2]/div[5]/div/form/table/tbody/tr/td/table/tbody/tr[1]/td[2]/select'))
         select.select_by_visible_text(year)
 

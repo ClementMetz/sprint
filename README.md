@@ -14,9 +14,11 @@ En cours de développement :
 ## Modules python à installer
 
 * selenium
+* webdriver_manager
 * bs4 (BeautifulSoup)
 * xlrd
 * xlsxwriter
+* openpyxl
 * numpy
 * scipy
 
@@ -49,9 +51,7 @@ Sprint offre la possibilité de générer automatiquement les tableaux de perfor
 
 ![Image](/resources/scraper.png)
 
-Une fois cette tâche effectuée, on peut exécuter `python AthleteScraper.py`. On obtient un fichier last_sbs.txt que l'on peut importer dans Excel en utilisant l'onglet Données -> Données externes -> Fichier texte de la barre d'outils. Le séparateur utilisé est le symbole |. Il suffit de copier les parties correspondantes du tableau obtenu dans les onglets PerfM et PerfW.
-
-Les performances indiquées correspondent aux derniers season best connus de chaque athlète dans chaque discipline.
+Une fois cette tâche effectuée, on exécute `python AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline.
 
 ## Suivi des compétitions et export CSV
 

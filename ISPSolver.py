@@ -12,7 +12,7 @@ import argparse
 
 def parse_option():
     parser = argparse.ArgumentParser(description='Optimize interclubs placement')
-    parser.add_argument('--workdir', type=str,default='ISPTableur_run.xlsm',help='Workbook directory')
+    parser.add_argument('--workdir', type=str,default='ISPTableur_run.xlsx',help='Workbook directory')
     args = parser.parse_args()
     return(args)
 
@@ -72,12 +72,13 @@ def initialize(perf,conflicts): #problem initialization
     conftable = np.matrix(conftable,dtype=str)
     
     
-    return(ev,ath,k,n,nb_confs,hungarian_perfos,conftable)
+    return(ev,ath,k,n,nb_confs,perfos,hungarian_perfos,conftable)
     
 
-def output(ev,ath,workbook,sheetname,k,n,sol,hung,solution_feasible): #output management
-    format = workbook.add_format()
-    format.set_bold()
+def output(ev,ath,workbook,sheetname,k,n,sol,perfos,hung,solution_feasible): #output management
+    format = workbook.add_format({'bold':True})
+    format2 = workbook.add_format({'color': 'red','bold':True})
+    center = workbook.add_format({'align':'center'})
 
     x = sol.x
     #opt = int(-sol.fun)
@@ -111,7 +112,7 @@ def output(ev,ath,workbook,sheetname,k,n,sol,hung,solution_feasible): #output ma
     
     for i in range(n):
         for j in range(k):
-            worksheet.write_number(i+8,j+1,x[i,j]) #one hot encoding
+            worksheet.write_rich_string(i+8,j+1,perfos[i][j]," → ",format2,str(int(hung[i,j])),center) #one hot encoding
 
     worksheet.write_number(0,0,opt,format) #total perf
     worksheet.write_number(7,0,opt,format) #total perf
@@ -138,7 +139,7 @@ def output(ev,ath,workbook,sheetname,k,n,sol,hung,solution_feasible): #output ma
                 worksheet.write_string(a+8,k+1+num,ev[r])
                 num+=1
                 worksheet.write_number(a+8,k+1+num,hung[a,r])
-    
+    """
     chart1 = workbook.add_chart({'type': 'column', 'subtype': 'stacked'})
     chart1.add_series({
     'categories': ["Affectation"+sheetname, 0, 1, 0, k],
@@ -181,7 +182,7 @@ def output(ev,ath,workbook,sheetname,k,n,sol,hung,solution_feasible): #output ma
     chart3.set_size({'width': 750, 'height': 750})
     chart3.set_legend({'none': True})
     worksheet.insert_chart('E15', chart3)
-
+    """
     
     
     worksheet = workbook.add_worksheet("HungarianTable"+sheetname)
@@ -275,18 +276,18 @@ def main():
     conflictsM = table.sheet_by_name("EventConflictsM")
     conflictsW = table.sheet_by_name("EventConflictsW")
     print("----------Men's problem initialization-------------")
-    ev,ath,k,n,nb_confs,hung,conf = initialize(perfM,conflictsM)
+    ev,ath,k,n,nb_confs,perfos,hung,conf = initialize(perfM,conflictsM)
     print("----------Men's problem resolution-------------")
     sol,solution_feasible = optim(perfM,conflictsM,ev,ath,k,n,nb_confs,hung,conf)
     print("----------Men's solution found-------------")
     workbook = xlsxwriter.Workbook('ISPSolution.xlsx')
-    output(ev,ath,workbook,"M",k,n,sol,hung,solution_feasible)
+    output(ev,ath,workbook,"M",k,n,sol,perfos,hung,solution_feasible)
     print("----------Women's problem initialization-------------")
-    ev,ath,k,n,nb_confs,hung,conf = initialize(perfW,conflictsW)
+    ev,ath,k,n,nb_confs,perfos,hung,conf = initialize(perfW,conflictsW)
     print("----------Women's problem resolution-------------")
     sol,solution_feasible = optim(perfW,conflictsW,ev,ath,k,n,nb_confs,hung,conf)
     print("----------Women's solution found-------------")
-    output(ev,ath,workbook,"W",k,n,sol,hung,solution_feasible)
+    output(ev,ath,workbook,"W",k,n,sol,perfos,hung,solution_feasible)
     workbook.close()
 
 if __name__ == '__main__':

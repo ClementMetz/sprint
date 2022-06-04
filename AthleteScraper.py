@@ -9,31 +9,33 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from auxiliary import athle_regressor,clean_up_perf,standardize_event
 import numpy as np
-import xlrd
-import xlsxwriter
+import openpyxl
 import argparse
 
 
 def parse_option():
     parser = argparse.ArgumentParser(description='Optimize interclubs placement')
-    parser.add_argument('--workdir', type=str,default='ISPTableur_run.xlsm',help='Workbook directory')
+    parser.add_argument('--workdir', type=str,default='ISPTableur_run.xlsx',help='Workbook directory')
     args = parser.parse_args()
     return(args)
 
 
 def initialize(athletes_table):
-    print(athletes_table)
+    #print(athletes_table)
     ath_table = []
-    for i in range(1,len(athletes_table.col(0)[1:])+1):
+    for i in range(2,athletes_table.max_row+1):
+        if athletes_table.cell(row=i,column=1).value==None:
+            break
         ath = {}
-        licence = athletes_table.cell_value(i,2)
-        if licence == '':
+        licence = athletes_table.cell(row = i,column = 3).value
+        #print(licence)
+        if licence == None:
             ath['licence'] = ''
         else:
-            ath['licence'] = str(int(athletes_table.cell_value(i,2)))
-        ath['name'] = athletes_table.cell_value(i,0) 
-        ath['firstname'] = athletes_table.cell_value(i,1)
-        ath['gender'] = athletes_table.cell_value(i,3)
+            ath['licence'] = str(int(athletes_table.cell(row = i,column = 3).value))
+        ath['name'] = athletes_table.cell(row=i,column=1).value
+        ath['firstname'] = athletes_table.cell(row=i,column=2).value
+        ath['gender'] = athletes_table.cell(row=i,column=4).value
         print(ath) #ath = [nom,prenom,licence,gender]
         ath_table.append(ath)
     return(ath_table)
@@ -144,7 +146,7 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
     return(last_SBs)
 """
 
-def make_csv(dico,gender,file):
+def make_csv(dico,gender,sheet,row):
     
     if gender=='W':
         list_events = ['100mW','200mW','400mW','800mW','1500mW','3000mW','100mHW','400mHW','3000walkW','longW','highW','tripleW','poleW','shotW',
@@ -154,35 +156,33 @@ def make_csv(dico,gender,file):
                 'shotM','javM','hammerM','discM']
     for i in range(len(list_events)):
         x = list_events[i]
+        sheet.cell(column = i+5,row = row, value='')
         if x in dico.keys():
-            file.write(dico[x])
-        else:
-            file.write('o')
-        if i<len(list_events)-1:
-            file.write('|')
-        else:
-            file.write('\n')
+            sheet.cell(column = i+5,row = row, value=dico[x])
 
 
 
 def main():
     opt = parse_option()
-    table = xlrd.open_workbook(opt.workdir)
-    athletes2scrape = table.sheet_by_name("AthleteScraper")
-    ath_table = initialize(athletes2scrape)
-    time.sleep(0.1)
+    wb = openpyxl.load_workbook(filename = opt.workdir)
+    sheet = wb['AthleteScraper']
+    ath_table = initialize(sheet)
 
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     url = "https://bases.athle.fr/asp.net/accueil.aspx?frmbase=resultats"
     driver.get(url)
 
-    f = open('last_sbs.txt','w')
+    row=2
+
     for ath in ath_table:
         last_SBs = request(driver,ath['name'],ath['firstname'],ath['gender'],True,ath['licence'],'')
         print(ath['firstname'],ath['name'])
         print(last_SBs)
-        make_csv(last_SBs,ath['gender'],f)
-    f.close()
+        make_csv(last_SBs,ath['gender'],sheet,row)
+        row+=1
+    wb.save(filename = 'ISPTableur_run.xlsx')
+
+
 
 
 if __name__ == '__main__':
