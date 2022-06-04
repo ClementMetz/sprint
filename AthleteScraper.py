@@ -15,7 +15,7 @@ import argparse
 
 def parse_option():
     parser = argparse.ArgumentParser(description='Optimize interclubs placement')
-    parser.add_argument('--workdir', type=str,default='ISPTableur_run.xlsx',help='Workbook directory')
+    parser.add_argument('--workdir', type=str,default='ISPInput.xlsx',help='Workbook directory')
     args = parser.parse_args()
     return(args)
 
@@ -180,7 +180,7 @@ def main():
         print(last_SBs)
         make_csv(last_SBs,ath['gender'],sheet,row)
         row+=1
-    wb.save(filename = 'ISPTableur_run.xlsx')
+    wb.save(filename = opt.workdir)
 
 
 

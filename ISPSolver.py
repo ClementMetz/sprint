@@ -12,7 +12,7 @@ import argparse
 
 def parse_option():
     parser = argparse.ArgumentParser(description='Optimize interclubs placement')
-    parser.add_argument('--workdir', type=str,default='ISPTableur_run.xlsx',help='Workbook directory')
+    parser.add_argument('--workdir', type=str,default='ISPInput.xlsx',help='Workbook directory')
     args = parser.parse_args()
     return(args)
 
