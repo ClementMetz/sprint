@@ -24,7 +24,7 @@ En cours de développement :
 
 ## Utilisation
 
-Ouvrir ISPTableur_run.xlsm.
+Ouvrir ISPInput.xlsx.
 
 ![Image](/resources/perfs.png)
 
@@ -34,7 +34,7 @@ On entre dans PerfM (pour les hommes) et PerfW (pour les femmes) toutes les perf
 
 On entre dans ConflictsHelperM (pour les hommes) et ConflictsHelperW (pour les femmes) les horaires de début d'échauffement et de fin de repos pour chacune des épreuves.
 
-On exécute ensuite `python ISPSolver.py`. Le résultat est contenu dans le fichier Excel ISPSolution.xlsx.
+On exécute ensuite `ISPSolver.py`. Le résultat est contenu dans le fichier Excel ISPSolution.xlsx.
 
 ![Image](/resources/result.png)
 
@@ -47,11 +47,11 @@ La méthode utilisée pour traiter ce problème d'optimisation en nombres entier
 
 ## Génération automatique du tableau des performances
 
-Sprint offre la possibilité de générer automatiquement les tableaux de performances PerfW et PerfM. Pour cela, on va dans l'onglet AthleteScraper de ISPTableur_run.xlsm. On remplit les noms, prénoms et sexes des athlètes. On remplit de préférence les numéros de licences, de sorte à éviter les problèmes d'homonymie. Il est préférable de commencer par les athlètes d'un même sexe, puis ceux de l'autre, afin de simplifier l'import des données.
+Sprint offre la possibilité de générer automatiquement les tableaux de performances PerfW et PerfM. Pour cela, on va dans l'onglet AthleteScraper de ISPInput.xlsx. On remplit les noms, prénoms et sexes des athlètes. On remplit de préférence les numéros de licences, de sorte à éviter les problèmes d'homonymie. Il est préférable de commencer par les athlètes d'un même sexe, puis ceux de l'autre, afin de simplifier l'import des données.
 
 ![Image](/resources/scraper.png)
 
-Une fois cette tâche effectuée, on exécute `python AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline.
+Une fois cette tâche effectuée, on exécute `AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline.
 
 ## Suivi des compétitions et export CSV
 
