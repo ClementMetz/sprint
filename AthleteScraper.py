@@ -16,6 +16,7 @@ import argparse
 def parse_option():
     parser = argparse.ArgumentParser(description='Scrape athlete data')
     parser.add_argument('--workdir', type=str,default='ISPInput.xlsx',help='Workbook directory')
+    parser.add_argument('--complete_perf',action='store_true',help='Specify in order to automatically fill PerfM and PerfW')
     args = parser.parse_args()
     return(args)
 
@@ -105,8 +106,14 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
     return(last_SBs)
 
 
-def make_csv(dico,gender,sheet,row):
-    
+def make_csv(dico,gender,wb,row,countM,countW,sM,sW,opt):
+    sheet = wb['AthleteScraper']
+
+    if opt.complete_perf:
+        perf_sheet = wb["Perf"+gender]
+        c = eval("count"+gender)
+        s = eval("s"+gender)
+  
     if gender=='W':
         list_events = ['100mW','200mW','400mW','800mW','1500mW','3000mW','100mHW','400mHW','3000walkW','longW','highW','tripleW','poleW','shotW',
                 'javW','hammerW','discW']
@@ -115,10 +122,16 @@ def make_csv(dico,gender,sheet,row):
                 'shotM','javM','hammerM','discM']
     for i in range(len(list_events)):
         x = list_events[i]
-        sheet.cell(column = i+5,row = row, value='')
+        sheet.cell(column = i+6,row = row, value='')
+        if opt.complete_perf:
+            alias = sheet.cell(column = 5,row = row).value
+            perf_sheet.cell(column=1, row = s+c, value=alias)
         if x in dico.keys():
-            sheet.cell(column = i+5,row = row, value=dico[x])
+            sheet.cell(column = i+6,row = row, value=dico[x])
+            if opt.complete_perf:
+                perf_sheet.cell(column=i+2, row = s+c, value=dico[x])
 
+    
 
 
 def main():
@@ -133,23 +146,37 @@ def main():
     driver_options.add_argument("disable-extensions")
     driver_options.add_argument("no-sandbox")
     driver_options.add_argument("disable-dev-shm-usage")
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), chrome_options=driver_options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=driver_options)
     url = "https://bases.athle.fr/asp.net/accueil.aspx?frmbase=resultats"
     driver.get(url)
+    countM,countW = 0,0
+
+    if opt.complete_perf: #initialize sM,sW
+        perfM_sheet = wb['PerfM']
+        perfW_sheet = wb['PerfW']
+        sM,sW=1,1
+        while True:
+            if perfM_sheet.cell(row=sM,column=1).value==None: #locate first empty row
+                break
+            sM+=1
+        while True:
+            if perfW_sheet.cell(row=sW,column=1).value==None: #locate first empty row
+                break
+            sW+=1
 
     for row,ath in enumerate(ath_table):
         last_SBs = request(driver,ath['name'],ath['firstname'],ath['gender'],True,ath['licence'],'')
         print(ath['firstname'],ath['name'])
         print(last_SBs)
-        make_csv(last_SBs,ath['gender'],sheet,row+2)
+        make_csv(last_SBs,ath['gender'],wb,row+2,countM,countW,sM,sW,opt)
+
+        if ath['gender']=='M':
+            countM+=1
+        else:
+            countW+=1
+        
     wb.save(filename = opt.workdir)
-
-
 
 
 if __name__ == '__main__':
     main()
-
-
-
-

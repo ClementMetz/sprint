@@ -21,7 +21,6 @@ import os
 def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0,clubname=''):
     regressor = athle_regressor()
     now = datetime.now().year
-    #time.sleep(0.2)
     element = driver.find_element(By.XPATH,'/html/body/div/div[2]/table/tbody/tr/td[4]')
     element.click()
     
@@ -31,10 +30,8 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
         entries = []
         year = str(y)
         
-        #time.sleep(0.3)
         select = Select(driver.find_element(By.XPATH,'/html/body/div/div[2]/div[5]/div/form/table/tbody/tr/td/table/tbody/tr[1]/td[2]/select'))
         select.select_by_visible_text(year)
-
         
         if by_licence_nb: #to avoid namesakes
             element = driver.find_element(By.XPATH,'/html/body/div/div[2]/div[5]/div/form/table/tbody/tr/td/table/tbody/tr[6]/td[2]/input')
@@ -42,13 +39,10 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
 
         element = driver.find_element(By.XPATH,'/html/body/div/div[2]/div[5]/div/form/table/tbody/tr/td/table/tbody/tr[3]/td[2]/input')
         element.send_keys(athletename)
-        #time.sleep(0.2)
 
         element = driver.find_element(By.XPATH,'/html/body/div/div[2]/div[5]/div/form/table/tbody/tr/td/table/tbody/tr[4]/td[2]/input')
         element.send_keys(firstname)
-        #time.sleep(0.2)
 
-    
         element = driver.find_element(By.XPATH,'/html/body/div/div[2]/div[5]/div/form/div[1]/input')
         element.click()
 
@@ -58,7 +52,6 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
             table = driver.find_element(By.XPATH,tablexpath)
             soup = BeautifulSoup(table.get_attribute('innerHTML'), 'html.parser')
             t = soup.get_text(separator='|||').split('\n')
-            #print(t)
             for i in range (2,len(t)):
                 l = t[i].split('|||')
                 date = l[1]
@@ -84,8 +77,7 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
                     pass
             
                 entries.append(entry)
-            entries.reverse()
-            print(entries)
+
         except:
             pass
 
@@ -121,12 +113,12 @@ def draw_graphics_from_athlete_data(data,opt):
             year_list.append(x[2])
             label_list.append(x[0])
         
-        p = polyfit(year_list,perf_list,2)
-        
         fig, ax = plt.subplots()
         ax.set_title(event)
         ax.scatter(year_list, perf_list)
-        ax.plot(arange(min(year_list)-0.6,max(year_list)+0.6,0.02),[polyval(p,x) for x in arange(min(year_list)-0.6,max(year_list)+0.6,0.02)],'r')
+        if len(perf_list)>3: #avoid dumb plots
+            p = polyfit(year_list,perf_list,2)
+            ax.plot(arange(min(year_list)-0.6,max(year_list)+0.6,0.02),[polyval(p,x) for x in arange(min(year_list)-0.6,max(year_list)+0.6,0.02)],'r')
 
         for i, txt in enumerate(label_list):
             ax.annotate(txt, (year_list[i], perf_list[i]))
@@ -163,7 +155,7 @@ def main():
     driver_options.add_argument("disable-extensions")
     driver_options.add_argument("no-sandbox")
     driver_options.add_argument("disable-dev-shm-usage")
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), chrome_options=driver_options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=driver_options)
 
     url = "https://bases.athle.fr/asp.net/accueil.aspx?frmbase=resultats"
     driver.get(url)

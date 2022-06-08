@@ -21,6 +21,7 @@ En cours de développement :
 * xlsxwriter (cmd -> pip install xlsxwriter)
 * openpyxl (cmd -> pip install openpyxl)
 * numpy et scipy (cmd -> pip install scipy)
+* matplotlib (cmd -> pip install matplotlib)
 
 ## Utilisation
 
@@ -51,7 +52,7 @@ Sprint offre la possibilité de générer automatiquement les tableaux de perfor
 
 ![Image](/resources/scraper.png)
 
-Une fois cette tâche effectuée, on exécute `AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline.
+Une fois cette tâche effectuée, on exécute `AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline. On peut copier directement ces performances à la suite des tableaux PerfM et PerfW en exécutant la commande `python AthleteScraper.py --complete_perf`.
 
 ## Suivi des compétitions et export CSV
 

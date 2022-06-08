@@ -186,9 +186,6 @@ def optim(perf,conflicts,ev,ath,k,n,nb_confs,hungarian_perfos,conftable):
         for s in range(n):
             Aub[n+k+nb_confs*s+c,s*k:(s+1)*k] = conftable[c,:]
 
-
-
-
     bub = np.ones(n+k+nb_confs*n)
     bub[:n+k] = 2
 

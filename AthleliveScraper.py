@@ -100,8 +100,7 @@ def scrap_event(n,day,opt,driver):
         except:
             break
 
-    for k in range(len(races)):
-        race = races[k]
+    for k,race in enumerate(races):
         
         try: #Check event status
             eventStatusPannelxpath = "/html/body/div/div[2]/main/div/div[2]/div/div[3]/div/div[1]/div["+str(k+1)+"]/div/div/div[3]/header/div/div/div"
@@ -185,7 +184,7 @@ def main():
     driver_options.add_argument("disable-extensions")
     driver_options.add_argument("no-sandbox")
     driver_options.add_argument("disable-dev-shm-usage")
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), chrome_options=driver_options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=driver_options)
     driver.get(opt.competition_url)
     accept_cookies = driver.find_element(By.XPATH,"/html/body/div/div[3]/div/div/div[3]/button") 
     accept_cookies.send_keys(Keys.ENTER)#accept cookies
