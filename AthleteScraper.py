@@ -14,7 +14,7 @@ import argparse
 
 
 def parse_option():
-    parser = argparse.ArgumentParser(description='Optimize interclubs placement')
+    parser = argparse.ArgumentParser(description='Scrape athlete data')
     parser.add_argument('--workdir', type=str,default='ISPInput.xlsx',help='Workbook directory')
     args = parser.parse_args()
     return(args)
@@ -104,47 +104,6 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
 
     return(last_SBs)
 
-"""   
-        i=3
-        while True: #/html/body/div/div[2]/table[2]/tbody/tr[3]/td[5]
-            try:
-                datexpath = tablexpath+'/tr['+str(i)+']/td[1]'
-                date = driver.find_element(By.XPATH,datexpath).text
-                
-                namexpath = tablexpath+'/tr['+str(i)+']/td[3]'
-                name = driver.find_element(By.XPATH,namexpath).text
-                
-                eventxpath = tablexpath+'/tr['+str(i)+']/td[5]'
-                event = driver.find_element(By.XPATH,eventxpath).text
-                event,hidden_event = standardize_event(event,gender)
-                l = len(hidden_event)
-                if event[l-1] == 'i': #indoor events are outdoor events
-                    event = event[:l-1]
-                
-                perfxpath = tablexpath+'/tr['+str(i)+']/td[11]'
-                perf = driver.find_element(By.XPATH,perfxpath).text
-                perf = clean_up_perf(perf,event)
-                #print(event,hidden_event,perf)
-
-                if event in ['100mM','200mM','400mM','800mM','1500mM','3000mM','3000scM','110mHM','400mHM','5000walkM','longM','highM','tripleM','poleM',
-                'shotM','javM','hammerM','discM','100mW','200mW','400mW','800mW','1500mW','3000mW','100mHW','400mHW','3000walkW','longW','highW','tripleW','poleW','shotW','javW','hammerW','discW']:
-                    new = regressor.reg(hidden_event,perf)
-                    if new>0 and (event not in current_SBs.keys() or new > regressor.reg(hidden_event,current_SBs[event])):
-                        current_SBs[event] = perf
-
-                i+=1
-    
-            except:
-                break
-        
-        for key in current_SBs.keys():
-            #print(key)
-            last_SBs[key] = current_SBs[key]
-        
-        driver.back()
-
-    return(last_SBs)
-"""
 
 def make_csv(dico,gender,sheet,row):
     
@@ -168,18 +127,21 @@ def main():
     sheet = wb['AthleteScraper']
     ath_table = initialize(sheet)
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver_options = webdriver.ChromeOptions()
+    driver_options.add_argument("headless")
+    driver_options.add_argument("disable-gpu")
+    driver_options.add_argument("disable-extensions")
+    driver_options.add_argument("no-sandbox")
+    driver_options.add_argument("disable-dev-shm-usage")
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), chrome_options=driver_options)
     url = "https://bases.athle.fr/asp.net/accueil.aspx?frmbase=resultats"
     driver.get(url)
 
-    row=2
-
-    for ath in ath_table:
+    for row,ath in enumerate(ath_table):
         last_SBs = request(driver,ath['name'],ath['firstname'],ath['gender'],True,ath['licence'],'')
         print(ath['firstname'],ath['name'])
         print(last_SBs)
-        make_csv(last_SBs,ath['gender'],sheet,row)
-        row+=1
+        make_csv(last_SBs,ath['gender'],sheet,row+2)
     wb.save(filename = opt.workdir)
 
 

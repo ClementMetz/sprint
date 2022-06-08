@@ -139,51 +139,6 @@ def output(ev,ath,workbook,sheetname,k,n,sol,perfos,hung,solution_feasible): #ou
                 worksheet.write_string(a+8,k+1+num,ev[r])
                 num+=1
                 worksheet.write_number(a+8,k+1+num,hung[a,r])
-    """
-    chart1 = workbook.add_chart({'type': 'column', 'subtype': 'stacked'})
-    chart1.add_series({
-    'categories': ["Affectation"+sheetname, 0, 1, 0, k],
-    'values':     ["Affectation"+sheetname, 2, 1, 2, k],
-    'name': "Athlete 1",
-    'data_labels': {'value': True}})
-    chart1.add_series({
-    'categories': ["Affectation"+sheetname, 0, 1, 0, k],
-    'values':     ["Affectation"+sheetname, 4, 1, 4, k],
-    'name': "Athlete 2",
-    'data_labels': {'value': True}})
-    chart1.set_size({'width': 1000, 'height': 576})
-    chart1.set_legend({'none': True})
-    worksheet.insert_chart('C10', chart1)
-
-    chart2 = workbook.add_chart({'type': 'column'})
-    chart2.add_series({
-    'categories': ["Affectation"+sheetname, 8, k+1, n+7, k+1],
-    'values':     ["Affectation"+sheetname, 8, k+3, n+7, k+3],
-    'name': "Event 1",
-    'fill':   {'color': '#62BF6C'},
-    'overlap':    -25,
-    'data_labels': {'value': True}})
-    chart2.add_series({
-    'categories': ["Affectation"+sheetname, 8, k+1, n+7, k+1],
-    'values':     ["Affectation"+sheetname, 8, k+5, n+7, k+5],
-    'name': "Event 2",
-    'fill':   {'color': '#FCF235'},
-    'data_labels': {'value': True}})
-    chart2.set_size({'width': 1440, 'height': 576})
-    chart2.set_legend({'none': True})
-    worksheet.insert_chart('G18', chart2)
-
-    chart3 = workbook.add_chart({'type': 'pie'})
-    chart3.add_series({
-    'categories': ["Affectation"+sheetname, 0, 1, 0, k],
-    'values':     ["Affectation"+sheetname, 5, 1, 5, k],
-    'data_labels': {'value': True,'category':True},
-    'label_position': 'none'})
-    chart3.set_size({'width': 750, 'height': 750})
-    chart3.set_legend({'none': True})
-    worksheet.insert_chart('E15', chart3)
-    """
-    
     
     worksheet = workbook.add_worksheet("HungarianTable"+sheetname)
     worksheet.add_table(0, 0, n, k)
@@ -204,21 +159,12 @@ def output(ev,ath,workbook,sheetname,k,n,sol,perfos,hung,solution_feasible): #ou
                                         'max_color': '#FCF235'})
     
     
-        
-
-    
-    
-    
 
 def optim(perf,conflicts,ev,ath,k,n,nb_confs,hungarian_perfos,conftable):
 
-    
-    #Affectation computation
-    
     criterion = - hungarian_perfos
 
     #add random perturbations to force convergence to a vertex of the simplex
-
     for i in range(n):
         for j in range(k):
             if criterion[i,j]!=0:
@@ -253,9 +199,9 @@ def optim(perf,conflicts,ev,ath,k,n,nb_confs,hungarian_perfos,conftable):
         warnings.simplefilter("ignore")
         sol = op.linprog(criterion,Aub,bub,bounds = (l,u),options = {'disp':True}) #,method = 'simplex'
     
-    x = sol.x
-    x[x<=0.5]=0
-    x[x>0.5] = 1
+    x = np.around(sol.x)
+    #x[x<=0.5]=0
+    #x[x>0.5] = 1
     
     if np.all(np.less_equal(np.dot(Aub,x),bub)):
         solution_feasible = True

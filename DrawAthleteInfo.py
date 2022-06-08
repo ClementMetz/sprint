@@ -96,65 +96,6 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
     return(data)
 
 
-"""
-        i=3
-
-        while True:
-            try:
-                entry=[]
-                datexpath = tablexpath+'/tr['+str(i)+']/td[1]'
-                date = driver.find_element(By.XPATH,datexpath).text
-                
-                namexpath = tablexpath+'/tr['+str(i)+']/td[3]'
-                name = driver.find_element(By.XPATH,namexpath).text
-                entry.append(name)
-                
-                eventxpath = tablexpath+'/tr['+str(i)+']/td[5]'
-                event = driver.find_element(By.XPATH,eventxpath).text
-                #print(event)
-                event,hidden_event = standardize_event(event,gender)
-                entry.append([event,hidden_event])
-                
-                perfxpath = tablexpath+'/tr['+str(i)+']/td[11]'
-                perf = driver.find_element(By.XPATH,perfxpath).text
-                #print(perf)
-                perf = clean_up_perf(perf,event)
-
-                entry.append(perf)
-                
-                pointsxpath = tablexpath+'/tr['+str(i)+']/td[13]'
-                points = driver.find_element(By.XPATH,pointsxpath).text
-                entry.append(points)
-                #print(points)
-                categoryxpath = tablexpath+'/tr['+str(i)+']/td[15]'
-                category = driver.find_element(By.XPATH,categoryxpath).text
-                entry.append(category)
-                #print(category)
-                entry.append(year)
-                entry.append(date)
-                
-                try: #compute points
-                    entry[3] = regressor.reg(hidden_event,perf)
-                
-                except: #event unknown by regressor
-                    pass
-                
-                #print(entry)
-                entries.append(entry)
-                i+=1
-    
-            except:
-                break
-        
-        entries.reverse()
-        data+=entries
-        
-        driver.back()
-
-    print(str(len(data))+' entries found.')
-    return(data)
-"""
-
 def date_to_float(date):
     j,m = tuple(date.split('/'))
     return((int(j)+(int(m)-1)*30)/360)
@@ -216,7 +157,13 @@ def main():
     by_licence_nb = (opt.licence_nb!=0)
     licence_nb = opt.licence_nb
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver_options = webdriver.ChromeOptions()
+    driver_options.add_argument("headless")
+    driver_options.add_argument("disable-gpu")
+    driver_options.add_argument("disable-extensions")
+    driver_options.add_argument("no-sandbox")
+    driver_options.add_argument("disable-dev-shm-usage")
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), chrome_options=driver_options)
 
     url = "https://bases.athle.fr/asp.net/accueil.aspx?frmbase=resultats"
     driver.get(url)
