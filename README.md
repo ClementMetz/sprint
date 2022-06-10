@@ -52,7 +52,7 @@ Sprint offre la possibilité de générer automatiquement les tableaux de perfor
 
 ![Image](/resources/scraper.png)
 
-Une fois cette tâche effectuée, on exécute `AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline. On peut copier directement ces performances à la suite des tableaux PerfM et PerfW en exécutant la commande `python AthleteScraper.py --complete_perf`. Les noms indiqués dans la colonne de gauche de PerfM et PerfW sont les alias indiqués dans l'onglet AthleteScraper.
+Une fois cette tâche effectuée, on exécute `AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline. On peut copier directement ces performances à la suite des tableaux PerfM et PerfW en exécutant la commande `python AthleteScraper.py --fill_perf`. Les noms indiqués dans la colonne de gauche de PerfM et PerfW sont les alias indiqués dans l'onglet AthleteScraper.
 
 ## Suivi des compétitions et export CSV
 

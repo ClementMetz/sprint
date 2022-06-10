@@ -16,7 +16,7 @@ import argparse
 def parse_option():
     parser = argparse.ArgumentParser(description='Scrape athlete data')
     parser.add_argument('--workdir', type=str,default='ISPInput.xlsx',help='Workbook directory')
-    parser.add_argument('--complete_perf',action='store_true',help='Specify in order to automatically fill PerfM and PerfW')
+    parser.add_argument('--fill_perf',action='store_true',help='Specify in order to automatically fill PerfM and PerfW')
     args = parser.parse_args()
     return(args)
 
@@ -109,7 +109,7 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
 def make_csv(dico,gender,wb,row,countM,countW,sM,sW,opt):
     sheet = wb['AthleteScraper']
 
-    if opt.complete_perf:
+    if opt.fill_perf:
         perf_sheet = wb["Perf"+gender]
         c = eval("count"+gender)
         s = eval("s"+gender)
@@ -123,12 +123,12 @@ def make_csv(dico,gender,wb,row,countM,countW,sM,sW,opt):
     for i in range(len(list_events)):
         x = list_events[i]
         sheet.cell(column = i+6,row = row, value='')
-        if opt.complete_perf:
+        if opt.fill_perf:
             alias = sheet.cell(column = 5,row = row).value
             perf_sheet.cell(column=1, row = s+c, value=alias)
         if x in dico.keys():
             sheet.cell(column = i+6,row = row, value=dico[x])
-            if opt.complete_perf:
+            if opt.fill_perf:
                 perf_sheet.cell(column=i+2, row = s+c, value=dico[x])
 
     
@@ -151,7 +151,7 @@ def main():
     driver.get(url)
     countM,countW = 0,0
 
-    if opt.complete_perf: #initialize sM,sW
+    if opt.fill_perf: #initialize sM,sW
         perfM_sheet = wb['PerfM']
         perfW_sheet = wb['PerfW']
         sM,sW=1,1
