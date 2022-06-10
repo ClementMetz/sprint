@@ -23,9 +23,13 @@ En cours de développement :
 * numpy et scipy (cmd -> pip install scipy)
 * matplotlib (cmd -> pip install matplotlib)
 
-## Utilisation
+## Planification des interclubs
 
-Ouvrir ISPInput.xlsx.
+Le but de l'algorithme dont le mode d'utilisation est présenté ci-dessous est de trouver la meilleure répartition possible des athlètes du club dans les épreuves des interclubs en prenant en compte les contraintes de la compétition (2 athlètes maximum par épreuve, 2 épreuves maximum par athlète, une course maximum par athlète, et pas de conflits horaires entre épreuves). L'intérêt de l'algorithme est double : gagner du temps pour l'organisation, et maximiser la somme des points attendus. Une version antérieure de cet algorithme de placement a été testée avec succès dans un cas d'usage réel à l'occasion du deuxième tour des interclubs 2022 de l'AC Boulogne-Billancourt. La compétition s'est soldée par un record de points du club, une victoire en division régionale, et un passage inédit en division N2D.
+
+### Mode d'emploi
+
+Commencer par ouvrir le fichier Excel ISPInput.xlsx.
 
 ![Image](/resources/perfs.png)
 
@@ -40,13 +44,12 @@ On exécute ensuite `ISPSolver.py`. Le résultat est contenu dans le fichier Exc
 ![Image](/resources/result.png)
 
 En haut de AffectationM et AffectationW, on a le tableau des athlètes participants à chaque épreuve. A droite, pour chaque athlète, les épreuves auxquelles il/elle participe. Le total de points est indiqué en haut à gauche. On a également les tables hongroises des performances entrées à disposition dans HungarianTableM et W.
-Le but de l'algorithme est de trouver la meilleure répartition possible en prenant en compte les contraintes des interclubs (2 athlètes maximum par épreuve, 2 épreuves maximum par athlète, une course maximum par athlète, et pas de conflit horaire entre épreuves). 
 
-## Exactitude de la solution
+### Exactitude de la solution
 
 La méthode utilisée pour traiter ce problème d'optimisation en nombres entiers est de le relaxer en un problème d'optimisation linéaire. Il est ensuite résolu par la méthode des points intérieurs (variante du célèbre algorithme du simplexe). Expérimentalement, il semble que le résultat de l'optimisation relaxée soit toujours solution du problème en nombres entiers (les variables convergent toujours vers 0 ou 1, la solution optimale du problème relaxé est donc une solution du problème en nombres entiers, et c'en est par conséquent la solution optimale). La garantie théorique de ce fait n'est pas connue. Toute preuve mathématique serait donc la bienvenue.
 
-## Génération automatique du tableau des performances
+### Génération automatique du tableau des performances
 
 Sprint offre la possibilité de générer automatiquement les tableaux de performances PerfW et PerfM. Pour cela, on va dans l'onglet AthleteScraper de ISPInput.xlsx. On remplit les noms, prénoms, sexes et alias des athlètes. On remplit de préférence les numéros de licences, de sorte à éviter les problèmes d'homonymie. 
 
