@@ -147,6 +147,7 @@ def scrap_event(n,day,opt,driver):
                 try:
                     pointsxpath = athletePannelxpath+"/div[3]/div/span/span[1]/span"
                     nbpoints = driver.find_element(By.XPATH,pointsxpath).text
+                    int(nbpoints) #assert nb points is an int and not bolt machin SB truc
                     competition_base[-1]['nbpoints'] = nbpoints
                 except:
                     pass
@@ -206,7 +207,7 @@ def main():
         except:
             day+=1
             i=1
-    with open('competition.csv', 'w') as csvfile:
+    with open('competition.csv', 'w', newline='') as csvfile:
         filewriter = csv.writer(csvfile, delimiter='|')
         filewriter.writerow(list(opt.clubpoints.keys()))
         filewriter.writerow(list(opt.clubpoints.values()))
