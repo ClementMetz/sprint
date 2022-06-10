@@ -36,7 +36,8 @@ def parse_option():
 
 def filter_linebreaks(t):
     s = t.split('\n')
-    return(s[0],"\n---------------------- Evaluation"+" of " + s[0] +" -----------------------")
+    ev = s[0].split(' ')
+    return(ev[:len(ev)-1],ev[-1],"\n---------------------- Evaluation of " + s[0] +" -----------------------")
             
 def filter_athlete(t):
     s = t.split('\n')
@@ -79,9 +80,14 @@ def scrap_event(n,day,opt,driver):
 
     event = element.text
     #print(event)
-    event,eventstyle = filter_linebreaks(event)
-    category = event.split(' ')[-1]
+    event,category,eventstyle = filter_linebreaks(event)
+    #category = event.split(' ')[-1]
     gender = category[-1]
+    if gender in ['G','H']:
+        gender = 'M'
+    elif gender=='F':
+        gender = 'W'
+    
     print(eventstyle)
     element.click() 
     time.sleep(opt.ping)
