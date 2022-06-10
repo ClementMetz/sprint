@@ -48,11 +48,11 @@ La méthode utilisée pour traiter ce problème d'optimisation en nombres entier
 
 ## Génération automatique du tableau des performances
 
-Sprint offre la possibilité de générer automatiquement les tableaux de performances PerfW et PerfM. Pour cela, on va dans l'onglet AthleteScraper de ISPInput.xlsx. On remplit les noms, prénoms et sexes des athlètes. On remplit de préférence les numéros de licences, de sorte à éviter les problèmes d'homonymie. Il est préférable de commencer par les athlètes d'un même sexe, puis ceux de l'autre, afin de simplifier l'import des données.
+Sprint offre la possibilité de générer automatiquement les tableaux de performances PerfW et PerfM. Pour cela, on va dans l'onglet AthleteScraper de ISPInput.xlsx. On remplit les noms, prénoms, sexes et alias des athlètes. On remplit de préférence les numéros de licences, de sorte à éviter les problèmes d'homonymie. 
 
 ![Image](/resources/scraper.png)
 
-Une fois cette tâche effectuée, on exécute `AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline. On peut copier directement ces performances à la suite des tableaux PerfM et PerfW en exécutant la commande `python AthleteScraper.py --complete_perf`.
+Une fois cette tâche effectuée, on exécute `AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline. On peut copier directement ces performances à la suite des tableaux PerfM et PerfW en exécutant la commande `python AthleteScraper.py --complete_perf`. Les noms indiqués dans la colonne de gauche de PerfM et PerfW sont les alias indiqués dans l'onglet AthleteScraper.
 
 ## Suivi des compétitions et export CSV
 
