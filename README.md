@@ -16,7 +16,7 @@ En cours de développement :
 * Cliquer sur installer.bat
 * L'installateur python se lance, choisir les options ci-dessous.
 <p float="center">
-  <img src="resources/optional.png" width="360" /> </br>
+  <img src="resources/optional.png" width="360" />
   <img src="resources/advanced.png" width="360"/> 
 </p>
 
