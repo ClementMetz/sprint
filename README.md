@@ -23,7 +23,7 @@ En cours de développement :
 </p>
 </div>
 
-* Une fois l'installation de python terminée, l'installation des modules complémentaires commence.
+* Une fois l'installation de python terminée, l'installation des modules complémentaires commence. Entrer "yes" et appuyer sur ENTER quand l'invite de commandes pose une question.
 * L'invite de commandes se ferme, c'est terminé.
 
 ## Planification des interclubs
