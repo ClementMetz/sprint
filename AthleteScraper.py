@@ -87,7 +87,7 @@ def request(driver,athletename,firstname,gender,by_licence_nb=False,licence_nb=0
                 perf = l[6]
                 perf = clean_up_perf(perf,event)
 
-                if event in ['100mM','200mM','400mM','800mM','1500mM','3000mM','3000scM','110mHM','400mHM','5000walkM','longM','highM','tripleM','poleM',
+                if event in ['100mM','200mM','400mM','800mM','1500mM','3000mM','3000mscM','110mHM','400mHM','5000walkM','longM','highM','tripleM','poleM',
                 'shotM','javM','hammerM','discM','100mW','200mW','400mW','800mW','1500mW','3000mW','100mHW','400mHW','3000walkW','longW','highW','tripleW','poleW','shotW','javW','hammerW','discW']:
                     new = regressor.reg(hidden_event,perf)
                     if new>0 and (event not in current_SBs.keys() or new > regressor.reg(hidden_event,current_SBs[event])):
