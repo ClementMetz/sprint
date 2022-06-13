@@ -118,7 +118,7 @@ def make_csv(dico,gender,wb,row,countM,countW,sM,sW,opt):
         list_events = ['100mW','200mW','400mW','800mW','1500mW','3000mW','100mHW','400mHW','3000walkW','longW','highW','tripleW','poleW','shotW',
                 'javW','hammerW','discW']
     else:
-        list_events = ['100mM','200mM','400mM','800mM','1500mM','3000mM','3000scM','110mHM','400mHM','5000walkM','longM','highM','tripleM','poleM',
+        list_events = ['100mM','200mM','400mM','800mM','1500mM','3000mM','3000mscM','110mHM','400mHM','5000walkM','longM','highM','tripleM','poleM',
                 'shotM','javM','hammerM','discM']
     for i in range(len(list_events)):
         x = list_events[i]
