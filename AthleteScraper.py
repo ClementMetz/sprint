@@ -151,10 +151,11 @@ def main():
     driver.get(url)
     countM,countW = 0,0
 
+    sM,sW=1,1
     if opt.fill_perf: #initialize sM,sW
         perfM_sheet = wb['PerfM']
         perfW_sheet = wb['PerfW']
-        sM,sW=1,1
+        
         while True:
             if perfM_sheet.cell(row=sM,column=1).value==None: #locate first empty row
                 break

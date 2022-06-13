@@ -11,7 +11,7 @@ En cours de développement :
 
 * Outil d'estimation du potentiel des jeunes athlètes.
 
-## Installation
+## Installation (Windows)
 
 * Cliquer sur installer.bat
 * L'installateur python se lance, sélectionner "Custom installation" et choisir les options ci-dessous.
