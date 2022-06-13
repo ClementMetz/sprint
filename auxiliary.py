@@ -1,6 +1,5 @@
 from datetime import timedelta
 from datetime import datetime
-import scipy.optimize as op
 import numpy as np
 from math import sqrt
 

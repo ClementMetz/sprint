@@ -11,17 +11,13 @@ En cours de développement :
 
 * Outil d'estimation du potentiel des jeunes athlètes.
 
-## A installer
+## Installation
 
-* python (https://www.python.org/)
-* selenium (cmd -> pip install selenium)
-* webdriver_manager (cmd -> pip install webdriver_manager)
-* bs4 (BeautifulSoup) (cmd -> pip install beautifulsoup4)
-* xlrd (cmd -> pip install xlrd)
-* xlsxwriter (cmd -> pip install xlsxwriter)
-* openpyxl (cmd -> pip install openpyxl)
-* numpy et scipy (cmd -> pip install scipy)
-* matplotlib (cmd -> pip install matplotlib)
+* Cliquer sur installer.bat
+* L'installateur python se lance, choisir les options ci-dessous.
+![Image](/resources/optional.png) ![Image](/resources/advanced.png)
+* Une fois l'installation de python terminée, l'installation des modules complémentaires commence.
+* L'invite de commandes se ferme, c'est terminé.
 
 ## Planification des interclubs
 
