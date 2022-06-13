@@ -16,8 +16,11 @@ En cours de développement :
 * Cliquer sur installer.bat
 * L'installateur python se lance, choisir les options ci-dessous.
 <p float="center">
-  <img src="resources/optional.png" width="180" />
-  <img src="resources/advanced.png" width="180"/> 
+  <img src="resources/optional.png" width="300" />
+</p>
+
+<p float="center">
+  <img src="resources/advanced.png" width="300"/> 
 </p>
 
 * Une fois l'installation de python terminée, l'installation des modules complémentaires commence.
