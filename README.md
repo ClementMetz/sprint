@@ -56,7 +56,9 @@ La méthode utilisée pour traiter ce problème d'optimisation en nombres entier
 
 Sprint offre la possibilité de générer automatiquement les tableaux de performances PerfW et PerfM. Pour cela, on va dans l'onglet AthleteScraper de ISPInput.xlsx. On remplit les noms, prénoms, sexes et alias des athlètes. On remplit de préférence les numéros de licences, de sorte à éviter les problèmes d'homonymie. 
 
-![Image](/resources/scraper.png)
+<div align="center">
+<img src="resources/scraper.png"/>
+</div>
 
 Une fois cette tâche effectuée, on exécute `AthleteScraper.py`. Les performances qui s'affichent alors dans l'onglet AthleteScraper correspondent aux derniers season bests connus de chaque athlète dans chaque discipline. On peut copier directement ces performances à la suite des tableaux PerfM et PerfW en exécutant la commande `python AthleteScraper.py --fill_perf`. Les noms indiqués dans la colonne de gauche de PerfM et PerfW sont les alias indiqués dans l'onglet AthleteScraper.
 
@@ -78,4 +80,6 @@ On peut obtenir les nuages de points et courbes de performances d'un athlète po
 
 Les graphiques sont alors contenus dans le dossier Figures/name. On peut également indiquer le numéro de licence via l'option --licence_nb afin d'éviter les problèmes d'homonymie.
 
-![Image](/resources/60mHWi.png)
+<div align="center">
+<img src="resources/60mHWi.png"/>
+</div>
