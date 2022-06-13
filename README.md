@@ -14,7 +14,7 @@ En cours de développement :
 ## Installation
 
 * Cliquer sur installer.bat
-* L'installateur python se lance, choisir les options ci-dessous.
+* L'installateur python se lance, sélectionner "Custom installation" et choisir les options ci-dessous.
 
 <div align="center">
 <p float="center">

@@ -1,0 +1,10 @@
+beautifulsoup4==4.11.1
+bs4==0.0.1
+matplotlib==3.5.2
+numpy==1.22.4
+openpyxl==3.0.10
+scipy==1.8.1
+selenium==4.2.0
+webdriver-manager==3.7.0
+xlrd==1.2.0
+XlsxWriter==3.0.3
