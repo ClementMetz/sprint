@@ -13,6 +13,7 @@ import argparse
 def parse_option():
     parser = argparse.ArgumentParser(description='Optimize interclubs placement')
     parser.add_argument('--workdir', type=str,default='ISPInput.xlsx',help='Workbook directory')
+    parser.add_argument('--output_dir', type=str,default='ISPSolution.xlsx',help='Output directory')
     args = parser.parse_args()
     return(args)
 
@@ -118,7 +119,7 @@ def output(ev,ath,workbook,sheetname,k,n,sol,perfos,hung,solution_feasible): #ou
     worksheet.write_number(7,0,opt,format) #total perf
     worksheet.write_string(n+9,1,"Optimization successful : "+ str(success),format)
     
-    for r in range(k): #participants per event
+    for r in range(k): #persons per event
         num=0
         tot = 0
         worksheet.write_string(0,r+1,ev[r])
@@ -131,7 +132,7 @@ def output(ev,ath,workbook,sheetname,k,n,sol,perfos,hung,solution_feasible): #ou
                 worksheet.write_number(num,r+1,hung[a,r])
         worksheet.write_number(5,r+1,tot)
     
-    for a in range(n): #participants per event
+    for a in range(n): #events per person
         num=0
         for r in range(k):
             if x[a,r]==1:
@@ -223,7 +224,7 @@ def main():
     print("----------Men's problem resolution-------------")
     sol,solution_feasible = optim(perfM,conflictsM,ev,ath,k,n,nb_confs,hung,conf)
     print("----------Men's solution found-------------")
-    workbook = xlsxwriter.Workbook('ISPSolution.xlsx')
+    workbook = xlsxwriter.Workbook(opt.output_dir)
     output(ev,ath,workbook,"M",k,n,sol,perfos,hung,solution_feasible)
     print("----------Women's problem initialization-------------")
     ev,ath,k,n,nb_confs,perfos,hung,conf = initialize(perfW,conflictsW)
