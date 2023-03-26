@@ -147,6 +147,7 @@ def standardize_event(event,gender): #Second version
         elif "perche" in event:
             event,hidden_event = "pole"+gender+'i',"pole"+gender+'i'
         elif identifiers["poids"]:
+            #print("features",event_features)
             if "poids" in event:
                 if gender=="W":
                     if event_features==4:
@@ -158,6 +159,7 @@ def standardize_event(event,gender): #Second version
                         event,hidden_event = "shotMi","shotMi"
                     else:
                         event,hidden_event = "shotMi"+"("+str(event_features)+"kg)","shotMi"
+            #print(event,hidden_event)
             
         else:
             l = (event.split('/')[0]).split(' ')
@@ -460,21 +462,23 @@ def string_converter_dist(s):
 def time_converter_string(t):
     t = round(t*100)/100
     h = t//3600
-    m = (t%3600)//60
-    s = t%60
+    m = int((t%3600)//60)
+    s = str(int(t%60*100)/100)
+    if int(s)<10:
+        s = '0'+s
     if h>0:
-        return(str(h)+"'"+str(m)+"'"+str(s))
+        return(str(h)+"'"+str(m)+"'"+s)
     
     elif m>0:
-        return(str(m)+"'"+str(s))
+        return(str(m)+"'"+s)
     else:
-        return(str(s))
+        return(s)
 
 def dist_converter_string(d):
     d = round(d*100)/100
     return(str(d))
 
-class athle_regressor(): #IAAF 2017 outdoor points calculator
+class athle_regressor(): #IAAF 2017 points calculator
     def __init__(self):
         self.constants = {'100mM':(-17,24.63,0),'200mM':(-35.5,5.08,0),'400mM':(-79,1.021,0),
         '800mM':(-182,0.198,0),'1500mM':(-385,0.04066,0),'3000mM':(-840,0.00815,0),
@@ -500,13 +504,13 @@ class athle_regressor(): #IAAF 2017 outdoor points calculator
         '400mMi':(-80.6,0.981,0),'600mMi':(-131,0.39,0),'800mMi':(-184,0.1974,0),'1000mMi':(-240,0.1139,0),
         '1500mMi':(-386,0.042,0),'1mileMi':(-415,0.0369,0),'3000mMi':(-840,0.008322,0),'5000mMi':(-1440,0.0029,0),
         '50mHMi':(-12.35,34.2,0),'60mHMi':(-14.6,23.9,0),'highMi':(11.534,32.29,-5000),'poleMi':(39.39,3.042,-5000),
-                          'longMi':(48.41,1.929,-5000),'tripleMi':(98.63,0.4611,-5000),'shotMi':(687.7,0.042172,-20000),
-                          '50mWi':(-12.1,33.03,0),'60mWi':(-14,24.9,0),'200mWi':(-47.5,1.962,0),'300mWi':(-79,0.6595,0),
-                          '400mWi':(-112,0.3224,0),'600mWi':(-190.35,0.1063,0),'800mWi':(-264,0.0572,0),
-                          '1000mWi':(-340.4,0.03473,0),'1500mWi':(-540,0.01365,0),'1mileWi':(-585.5,0.01154,0),
-                          '3000mWi':(-1200,0.00259,0),'5000mWi':(-2100,0.000825,0),'50mHWi':(-15.3,16.2,0),
-                          '60mHWi':(-18.2,11.16,0),'highWi':(10.574,39.34,-5000),'poleWi':(34.83,3.953,-5000),
-                          'longWi':(49.24,1.966,-5000),'tripleWi':(105.53,0.4282,-5000),'shotWi':(657.53,0.0462,-20000)}
+        'longMi':(48.41,1.929,-5000),'tripleMi':(98.63,0.4611,-5000),'shotMi':(687.7,0.042172,-20000),
+        '50mWi':(-12.1,33.03,0),'60mWi':(-14,24.9,0),'200mWi':(-47.5,1.962,0),'300mWi':(-79,0.6595,0),
+        '400mWi':(-112,0.3224,0),'600mWi':(-190.35,0.1063,0),'800mWi':(-264,0.0572,0),
+        '1000mWi':(-340.4,0.03473,0),'1500mWi':(-540,0.01365,0),'1mileWi':(-585.5,0.01154,0),
+        '3000mWi':(-1200,0.00259,0),'5000mWi':(-2100,0.000825,0),'50mHWi':(-15.3,16.2,0),
+        '60mHWi':(-18.2,11.16,0),'highWi':(10.574,39.34,-5000),'poleWi':(34.83,3.953,-5000),
+        'longWi':(49.24,1.966,-5000),'tripleWi':(105.53,0.4282,-5000),'shotWi':(657.53,0.0462,-20000)}
     
     
     def reg(self,event,perf): #perf given in seconds or meters or 'o' for no perf
